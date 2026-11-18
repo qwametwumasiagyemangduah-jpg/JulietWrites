@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const { hasSession, sameOrigin } = require("./_auth");
+const { hasSession, sameOrigin } = require("../lib/auth");
 
 const OWNER = "qwametwumasiagyemangduah-jpg";
 const REPO = "JulietWrites";
