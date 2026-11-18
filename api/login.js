@@ -1,4 +1,4 @@
-const { safeEqual, setSession, sameOrigin } = require("./_auth");
+const { safeEqual, setSession, sameOrigin } = require("../lib/auth");
 
 module.exports = function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
