@@ -49,6 +49,7 @@ module.exports = async function handler(req, res) {
       const poem = poems.find(item => slugFor(item) === requestedSlug || item.id === requestedSlug);
       if (!poem) {
         res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60");
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
         return res.status(404).send(documentHtml({
           title: "Poem not found — JulietWrites",
           description: "This poem could not be found in the JulietWrites collection.",
