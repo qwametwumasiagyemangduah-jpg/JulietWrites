@@ -35,7 +35,7 @@ async function loadJournal() {
       const card=document.createElement("a"); card.className="journal-card"; card.href="/journal?id="+encodeURIComponent(entry.id);
       card.append(safeText("span",entry.category || "Reflections","eyebrow"),safeText("time",dateLabel(entry.createdAt),"journal-date"),safeText("h2",entry.title));
       const preview=entry.content.length>190?entry.content.slice(0,190).trim()+"…":entry.content;
-      card.append(safeText("p",preview,"journal-preview"),safeText("span","Read reflection ↗","journal-read"));
+      card.append(safeText("p",preview,"journal-preview"),safeText("span","Read reflection","journal-read"));
       grid.append(card);
     });
     holder.append(grid);
