@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /letter
-
 Sitemap: https://julietwrites.vercel.app/sitemap.xml

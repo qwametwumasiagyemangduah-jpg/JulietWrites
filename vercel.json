@@ -1,4 +1,18 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/poem/:slug",
+      "destination": "/api/poetry-page?slug=:slug"
+    },
+    {
+      "source": "/poems",
+      "destination": "/api/poetry-page"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    }
+  ]
 }
