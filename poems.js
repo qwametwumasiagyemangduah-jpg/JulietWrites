@@ -41,7 +41,7 @@ function renderPoem(poem) {
   const back = document.createElement("a");
   back.className = "poem-back";
   back.href = "/poems";
-  back.textContent = "← Back to all poems";
+  back.textContent = "Back to all poems";
   const article = document.createElement("article");
   article.className = "poem-card reveal";
   article.append(
