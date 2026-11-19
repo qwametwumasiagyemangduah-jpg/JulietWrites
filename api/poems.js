@@ -16,7 +16,6 @@ async function readStore() {
   const decoded = Buffer.from(file.content.replace(/\n/g, ""), "base64").toString("utf8");
   return { poems: JSON.parse(decoded), sha: file.sha };
 }
-
 async function saveStore(poems, sha, message) {
   if (!process.env.GITHUB_TOKEN) throw new Error("Publishing has not been configured yet.");
   const response = await fetch(API, {
@@ -39,11 +38,13 @@ async function saveStore(poems, sha, message) {
     throw new Error(details.message || "GitHub could not save the poem.");
   }
 }
-
 function cleanText(value, max) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
-
+function slugify(value) {
+  return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "poem";
+}
 module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   try {
@@ -53,29 +54,28 @@ module.exports = async function handler(req, res) {
       const store = await readStore();
       return res.status(200).json({ poems: store.poems.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) });
     }
-
     if (!["POST", "PUT", "DELETE"].includes(req.method)) return res.status(405).json({ error: "Method not allowed." });
     if (!sameOrigin(req)) return res.status(403).json({ error: "Request origin could not be verified." });
     if (!hasSession(req)) return res.status(401).json({ error: "Please sign in to publish." });
 
     const store = await readStore();
-    let poems = store.poems;
-
+    const poems = store.poems;
     if (req.method === "POST") {
       const title = cleanText(req.body && req.body.title, 120);
       const content = cleanText(req.body && req.body.content, 20000);
       if (!title || !content) return res.status(400).json({ error: "Add both a title and the poem before publishing." });
       if (content.length < 2) return res.status(400).json({ error: "The poem is too short." });
-      const poem = { id: crypto.randomUUID(), title, content, createdAt: new Date().toISOString() };
+      const id = crypto.randomUUID();
+      const createdAt = new Date().toISOString();
+      const slug = slugify(title) + "-" + createdAt.slice(0, 10).replace(/-/g, "") + "-" + id.slice(0, 6);
+      const poem = { id, slug, title, content, createdAt };
       poems.unshift(poem);
       await saveStore(poems, store.sha, "Publish poem: " + title);
       return res.status(201).json({ ok: true, poem });
     }
-
     const id = cleanText(req.body && req.body.id, 80);
     const index = poems.findIndex(poem => poem.id === id);
     if (index < 0) return res.status(404).json({ error: "That poem could not be found." });
-
     if (req.method === "PUT") {
       const title = cleanText(req.body && req.body.title, 120);
       const content = cleanText(req.body && req.body.content, 20000);
@@ -84,7 +84,6 @@ module.exports = async function handler(req, res) {
       await saveStore(poems, store.sha, "Edit poem: " + title);
       return res.status(200).json({ ok: true, poem: poems[index] });
     }
-
     const removed = poems.splice(index, 1)[0];
     await saveStore(poems, store.sha, "Remove poem: " + removed.title);
     return res.status(200).json({ ok: true });
