@@ -19,7 +19,7 @@ async function loadJournal() {
         return;
       }
       const article=document.createElement("article"); article.className="journal-detail";
-      const back=document.createElement("a"); back.href="/journal"; back.className="journal-back"; back.textContent="← All journal entries";
+      const back=document.createElement("a"); back.href="/journal"; back.className="journal-back"; back.textContent="All journal entries";
       article.append(back,safeText("span",entry.category || "Reflections","eyebrow"),safeText("h2",entry.title,"journal-detail-title"),safeText("time",dateLabel(entry.createdAt),"journal-date"));
       const body=safeText("p",entry.content,"journal-detail-body"); body.style.whiteSpace="pre-wrap"; article.append(body); holder.append(article);
       document.title=entry.title+" — Journal | JulietWrites";
