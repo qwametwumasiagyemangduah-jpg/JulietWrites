@@ -48,7 +48,7 @@ function renderPoem(poem) {
     addText("div", "featured-meta", "FROM THE POETRY COLLECTION" + (formatDate(poem.createdAt) ? " · " + formatDate(poem.createdAt) : "")),
     addText("h2", "", poem.title),
     addText("p", "poem-body", poem.content),
-    addText("p", "poem-copyright", "© 2026 Juliet Asamoah. All Rights Reserved.\n\nJulietWrites is the official publishing platform for the original literary works of Juliet Asamoah.")
+    addText("p", "poem-copyright", "© 2026 Juliet Asamoah. All Rights Reserved.")
   );
   const download = document.createElement("button");
   download.type = "button";
@@ -61,7 +61,7 @@ function renderPoem(poem) {
     download.textContent = "Preparing your download…";
 
     function downloadTextCopy() {
-      const text = poem.title + "\n\n" + poem.content + "\n\n" + "© 2026 Juliet Asamoah. All Rights Reserved.\n\nJulietWrites is the official publishing platform for the original literary works of Juliet Asamoah." + "\n\n— JulietWrites";
+      const text = poem.title + "\n\n" + poem.content + "\n\n" + "© 2026 Juliet Asamoah. All Rights Reserved." + "\n\n— JulietWrites";
       const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -134,7 +134,7 @@ function renderPoem(poem) {
       y += titleLines.length * 10 + 9;
       doc.setDrawColor(...gold); doc.setLineWidth(.35); doc.line(83, y, 127, y); y += 13;
       doc.setFont("times", "normal"); doc.setFontSize(12); doc.setTextColor(...ink);
-      const paragraphs = (String(poem.content || "") + "\n\n" + "© 2026 Juliet Asamoah. All Rights Reserved.\n\nJulietWrites is the official publishing platform for the original literary works of Juliet Asamoah.").replace(/\r/g, "").split("\n");
+      const paragraphs = (String(poem.content || "") + "\n\n" + "© 2026 Juliet Asamoah. All Rights Reserved.").replace(/\r/g, "").split("\n");
       const lineHeight = 6.4, maxWidth = pageW - margin*2 - 12;
       for (const paragraph of paragraphs) {
         if (!paragraph.trim()) { y += lineHeight * .75; continue; }
