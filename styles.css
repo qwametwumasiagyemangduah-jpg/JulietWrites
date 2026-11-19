@@ -56,3 +56,7 @@
 /* Download individual poems */
 .poem-download{margin:0 0 20px;cursor:pointer;background:transparent;color:var(--text);font:inherit}
 .poem-download:hover{border-color:var(--gold);color:var(--gold)}
+
+
+/* Per-poem copyright attribution */
+.poem-copyright{white-space:pre-line;margin:42px 0 0;padding-top:22px;border-top:1px solid var(--line);color:var(--gold);font-size:.76rem;line-height:1.8;letter-spacing:.015em;max-width:680px}
