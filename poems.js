@@ -49,7 +49,23 @@ function renderPoem(poem) {
     addText("h2", "", poem.title),
     addText("p", "poem-body", poem.content)
   );
-  list.append(back, article);
+  const download = document.createElement("button");
+  download.type = "button";
+  download.className = "button button-outline poem-download";
+  download.textContent = "Download poem ↓";
+  download.addEventListener("click", () => {
+    const safeTitle = poem.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "julietwrites-poem";
+    const file = new Blob([poem.title + "\\n\\n" + poem.content + "\\n"], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(file);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = safeTitle + ".txt";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  });
+  list.append(back, article, download);
   document.title = poem.title + " — JulietWrites";
 }
 (async () => {
