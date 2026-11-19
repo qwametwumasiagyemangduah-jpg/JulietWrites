@@ -60,7 +60,7 @@ function renderPoem(poem) {
     download.textContent = "Preparing your download…";
 
     function downloadTextCopy() {
-      const text = poem.title + "\\n\\n" + poem.content + "\\n\\n— JulietWrites";
+      const text = poem.title + "\n\n" + poem.content + "\n\n— JulietWrites";
       const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -133,7 +133,7 @@ function renderPoem(poem) {
       y += titleLines.length * 10 + 9;
       doc.setDrawColor(...gold); doc.setLineWidth(.35); doc.line(83, y, 127, y); y += 13;
       doc.setFont("times", "normal"); doc.setFontSize(12); doc.setTextColor(...ink);
-      const paragraphs = String(poem.content || "").replace(/\\r/g, "").split("\\n");
+      const paragraphs = String(poem.content || "").replace(/\r/g, "").split("\n");
       const lineHeight = 6.4, maxWidth = pageW - margin*2 - 12;
       for (const paragraph of paragraphs) {
         if (!paragraph.trim()) { y += lineHeight * .75; continue; }
