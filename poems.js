@@ -30,7 +30,7 @@ function renderCollection(poems) {
     card.setAttribute("aria-label", "Read " + poem.title);
     const meta = addText("div", "featured-meta", "POEM " + String(index + 1).padStart(2, "0") + (formatDate(poem.createdAt) ? " · " + formatDate(poem.createdAt) : ""));
     const title = addText("h2", "", poem.title);
-    const action = addText("span", "poem-card-action", "Read poem ↗");
+    const action = addText("span", "poem-card-action", "Read poem");
     card.append(meta, title, action);
     list.append(card);
   });
