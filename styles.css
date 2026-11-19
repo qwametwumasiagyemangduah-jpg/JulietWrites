@@ -52,3 +52,7 @@
 @media(max-width:760px){.brand-name{font-size:1.38rem}.brand .brand-script{font-size:1em}}
 
 .footer-social{display:flex;align-items:center;gap:22px;margin-top:22px;color:var(--muted);font-size:.76rem}.footer-social>span{font-size:.63rem;letter-spacing:.16em;color:var(--gold)}.footer-social a{transition:color .2s}.footer-social a:hover{color:var(--text)}@media(max-width:760px){.footer-social{gap:17px;flex-wrap:wrap}}
+
+/* Download individual poems */
+.poem-download{margin:0 0 20px;cursor:pointer;background:transparent;color:var(--text);font:inherit}
+.poem-download:hover{border-color:var(--gold);color:var(--gold)}
