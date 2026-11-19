@@ -7,3 +7,18 @@
 
 /* JulietWrites official JW monogram */
 .brand{display:inline-flex;align-items:center;min-width:0}.brand-logo{display:block;width:88px;height:58px;object-fit:contain;object-position:center}.footer .brand-logo{width:96px;height:64px}@media(max-width:760px){.brand-logo{width:78px;height:52px}.footer .brand-logo{width:88px;height:58px}}
+
+/* Clickable title cards and individual poem reading view */
+.poem-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+.poem-title-card{display:flex;flex-direction:column;justify-content:space-between;min-height:220px;padding:clamp(25px,4vw,42px);border:1px solid var(--line);background:var(--bg2);transition:transform .25s,border-color .25s,background .25s}
+.poem-title-card:hover,.poem-title-card:focus-visible{transform:translateY(-4px);border-color:rgba(185,162,122,.65);background:#1d1917;outline:none}
+.poem-title-card h2{font:400 clamp(1.65rem,3vw,2.45rem)/1.2 var(--serif);color:var(--text);margin:24px 0}
+.poem-card-action{font-size:.75rem;letter-spacing:.06em;color:var(--gold)}
+.poem-detail{max-width:1000px}
+.poem-back{display:inline-block;margin:0 0 24px;color:var(--gold);font-size:.82rem}
+.poem-back:hover{text-decoration:underline}
+.poem-detail .poem-card{max-width:none;margin:0 auto}
+.poem-detail .poem-card h2{font-size:clamp(2.5rem,6vw,4.5rem);margin:28px 0 38px}
+.poem-detail .poem-body{font-size:clamp(1.05rem,2vw,1.2rem);line-height:2.1}
+.poem-notice{grid-column:1/-1;color:var(--muted)}
+@media(max-width:760px){.poem-grid{grid-template-columns:1fr;gap:13px}.poem-title-card{min-height:175px;padding:25px}.poem-detail .poem-card{padding:30px 24px}}
