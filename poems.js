@@ -48,7 +48,7 @@ function renderPoem(poem) {
     addText("div", "featured-meta", "FROM THE POETRY COLLECTION" + (formatDate(poem.createdAt) ? " · " + formatDate(poem.createdAt) : "")),
     addText("h2", "", poem.title),
     addText("p", "poem-body", poem.content),
-    addText("p", "poem-copyright", "© 2026 Juliet Asamoah. All Rights Reserved.\\n\\nJulietWrites is the official publishing platform for the original literary works of Juliet Asamoah.")
+    addText("p", "poem-copyright", "© 2026 Juliet Asamoah. All Rights Reserved.\n\nJulietWrites is the official publishing platform for the original literary works of Juliet Asamoah.")
   );
   const download = document.createElement("button");
   download.type = "button";
