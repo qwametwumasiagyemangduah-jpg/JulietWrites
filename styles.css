@@ -41,3 +41,10 @@
 .journal-list .empty-state{max-width:900px;margin:0 auto}
 .field select{width:100%;background:#100f0e;border:1px solid var(--line);padding:14px;color:var(--text);font:inherit;border-radius:0}
 @media(max-width:760px){.journal-list{padding:35px 6% 75px}.journal-grid{grid-template-columns:1fr;gap:13px}.journal-card{min-height:250px;padding:27px 24px}.journal-detail{padding:10px 0}.journal-detail-body{font-size:1rem;line-height:1.9}}
+
+/* JulietWrites wordmark: original header lettering with a handwritten Writes and pen flourish */
+.brand-name{display:inline-flex;align-items:baseline;white-space:nowrap;font-family:var(--serif);font-size:1.48rem;letter-spacing:-.045em;color:var(--text);line-height:1}
+.brand-script{font-family:'Caveat','Brush Script MT',cursive;font-size:1.9rem;font-weight:500;font-style:normal;letter-spacing:-.035em;color:#c8b9a5;margin-left:3px;transform:rotate(-4deg);display:inline-block}
+.brand-pen{width:21px;height:21px;align-self:center;margin-left:2px;color:var(--gold);transform:rotate(5deg);flex:none}
+.footer .brand-name{font-size:1.55rem}.footer .brand-script{font-size:2rem}
+@media(max-width:760px){.brand-name{font-size:1.38rem}.brand-script{font-size:1.78rem}.brand-pen{width:19px;height:19px}}
