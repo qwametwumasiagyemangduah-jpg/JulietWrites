@@ -60,3 +60,7 @@
 
 /* Per-poem copyright attribution */
 .poem-copyright{white-space:pre-line;margin:42px 0 0;padding-top:22px;border-top:1px solid var(--line);color:var(--gold);font-size:.76rem;line-height:1.8;letter-spacing:.015em;max-width:680px}
+
+
+/* Site-wide copyright notice */
+.footer-copyright{max-width:760px;margin:30px 0 0;padding:20px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:.72rem;line-height:1.8}.footer-copyright p{margin:0 0 7px}.footer-copyright p:first-child{color:var(--gold);letter-spacing:.025em}@media(max-width:760px){.footer-copyright{font-size:.68rem;margin-top:24px;padding-top:17px}}
