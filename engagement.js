@@ -16,5 +16,5 @@
  }
  refresh();
  like?.addEventListener("click",async()=>{like.disabled=true;try{const d=await api("POST",{action:"like",poemId:poem.id});count.textContent=d.likes+" "+(d.likes===1?"like":"likes");like.textContent=d.liked?"♥ Liked":"♡ Like this poem";if(!d.liked)like.title="Already liked from this browser."}catch(e){count.textContent=e.message}finally{like.disabled=false}});
- $("reader-response-form")?.addEventListener("submit",async e=>{e.preventDefault();const b=e.currentTarget.querySelector("button[type=submit]");b.disabled=true;status.textContent="Sending…";try{const d=await api("POST",{poemId:poem.id,displayName:$("reader-display-name").value,reflection:$("reader-reflection").value});status.textContent=d.message;e.currentTarget.reset()}catch(err){status.textContent=err.message}finally{b.disabled=false}});
+ $("reader-response-form")?.addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget;const b=form.querySelector("button[type=submit]");b.disabled=true;status.textContent="Sending…";try{const d=await api("POST",{poemId:poem.id,displayName:$("reader-display-name").value,reflection:$("reader-reflection").value});status.textContent=d.message;form.reset()}catch(err){status.textContent=err.message}finally{b.disabled=false}});
 })();
