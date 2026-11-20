@@ -35,7 +35,11 @@ async function saveStore(poems, sha, message) {
   });
   if (!response.ok) {
     const details = await response.json().catch(() => ({}));
-    throw new Error(details.message || "GitHub could not save the poem.");
+    const failure = new Error(details.message || "GitHub could not save the poem.");
+    failure.githubStatus = response.status;
+    failure.githubErrors = details.errors || null;
+    failure.githubRequestId = response.headers.get("x-github-request-id") || null;
+    throw failure;
   }
 }
 function cleanText(value, max) {
@@ -50,7 +54,22 @@ module.exports = async function handler(req, res) {
   try {
     if (req.method === "GET") {
       const manage = req.query && req.query.manage === "1";
-      if (manage && !hasSession(req)) return res.status(401).json({ error: "Please sign in again." });
+      const diagnostics = req.query && req.query.diagnostics === "1";
+      if ((manage || diagnostics) && !hasSession(req)) return res.status(401).json({ error: "Please sign in again." });
+      if (diagnostics) {
+        const token = process.env.GITHUB_TOKEN;
+        const headers = { "Accept": "application/vnd.github+json", "Authorization": "Bearer " + (token || ""), "X-GitHub-Api-Version": "2022-11-28" };
+        async function check(url) {
+          if (!token) return { ok: false, status: null, message: "GITHUB_TOKEN is not set." };
+          const result = await fetch(url, { headers });
+          const body = await result.json().catch(() => ({}));
+          return { ok: result.ok, status: result.status, message: result.ok ? "OK" : (body.message || "GitHub request failed.") };
+        }
+        const user = await check("https://api.github.com/user");
+        const repository = await check("https://api.github.com/repos/" + OWNER + "/" + REPO);
+        const file = await check(API + "?ref=" + BRANCH);
+        return res.status(200).json({ configured: Boolean(token), identity: user, repository, poemsFile: file, target: OWNER + "/" + REPO + "/" + FILE_PATH, branch: BRANCH });
+      }
       const store = await readStore();
       return res.status(200).json({ poems: store.poems.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) });
     }
@@ -89,6 +108,6 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error("JulietWrites poems API:", error);
-    return res.status(500).json({ error: error.message || "Something went wrong while saving." });
+    return res.status(500).json({ error: error.message || "Something went wrong while saving.", githubStatus: error.githubStatus || undefined, githubErrors: error.githubErrors || undefined, githubRequestId: error.githubRequestId || undefined });
   }
 };
