@@ -69,3 +69,13 @@
 .reader-engagement h2,.reader-engagement h3{font-family:var(--serif);font-weight:400}.reader-engagement h2{font-size:2rem;margin:0 0 20px}.reader-engagement h3{font-size:1.4rem;margin:30px 0 12px}
 .like-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.reader-reflection{padding:18px 0;border-top:1px solid var(--line)}.reader-reflection p{white-space:pre-wrap;margin:0 0 8px;font-family:var(--serif);line-height:1.8}.reader-reflection small{color:var(--gold);font-size:.75rem}
 .reader-response-form{border-top:1px solid var(--line);margin-top:28px;padding-top:10px}.reader-response-form .field input,.reader-response-form .field textarea{background:var(--bg)}
+
+/* Reader reflection form: clear, mobile-friendly stacked fields */
+.reader-response-form .field{display:block;width:100%;margin:18px 0;color:var(--text)}
+.reader-response-form .field>span{display:block;margin-bottom:8px;color:var(--text);font-size:.92rem}
+.reader-response-form .field input,.reader-response-form .field textarea{display:block;width:100%;max-width:100%;min-width:0;padding:13px 14px;border:1px solid var(--line);border-radius:0;background:#100f0e;color:var(--text);font:400 1rem/1.5 var(--sans);-webkit-appearance:none;appearance:none}
+.reader-response-form .field input::placeholder,.reader-response-form .field textarea::placeholder{color:#8f8780;opacity:1}
+.reader-response-form .field textarea{min-height:140px;resize:vertical}
+.reader-response-form .button{margin-top:8px;max-width:100%;white-space:normal}
+.reader-response-form .status{min-height:1.5em;margin:14px 0 0;color:var(--gold);overflow-wrap:anywhere}
+@media(max-width:760px){.reader-engagement{padding:24px 20px;margin:2rem auto}.reader-response-form .button{width:100%;justify-content:center}}
