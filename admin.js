@@ -9,7 +9,7 @@ async function api(url, options = {}) {
   if (!response.ok) throw new Error(data.error || "Something went wrong.");
   return data;
 }
-function showEditor() { loginPanel.classList.add("hidden"); editorPanel.classList.remove("hidden"); loadPoems(); loadJournal(); }
+function showEditor() { loginPanel.classList.add("hidden"); editorPanel.classList.remove("hidden"); loadPoems(); loadJournal(); loadEngagement(); }
 function showLogin() { editorPanel.classList.add("hidden"); loginPanel.classList.remove("hidden"); }
 async function loadPoems() {
   const holder = byId("poem-management");
@@ -110,4 +110,44 @@ if(journalForm){
     }catch(error){journalStatus.textContent=error.message;}
   });
   byId("journal-cancel-edit").addEventListener("click",resetJournalForm);
+}
+
+/* Reader reflection moderation and engagement overview */
+async function loadEngagement(){
+ const summary=byId("engagement-summary"),holder=byId("reader-response-management");
+ if(!summary||!holder)return;
+ summary.textContent="Loading engagement…";holder.textContent="Loading reader reflections…";
+ try{
+  const data=await api("/api/engagement?manage=1");
+  summary.replaceChildren();
+  [["Total likes",data.summary.likes],["Pending reflections",data.summary.pending],["Published reflections",data.summary.approved]].forEach(([label,value])=>{
+   const card=document.createElement("div");card.className="small-btn";card.style.padding="12px 16px";card.textContent=label+": "+value;summary.append(card);
+  });
+  holder.replaceChildren();
+  if(!data.responses.length){holder.innerHTML='<p class="hint">No reader reflections have been submitted yet.</p>';return}
+  data.responses.forEach(item=>{
+   const row=document.createElement("article");row.className="poem-row";row.style.alignItems="flex-start";
+   const info=document.createElement("div");info.style.flex="1";
+   const title=document.createElement("h3");title.textContent=item.displayName+" · "+item.status.toUpperCase();
+   const poem=document.createElement("small");poem.textContent="Poem: "+item.poemId+" · "+new Date(item.createdAt).toLocaleString();
+   const reflection=document.createElement("p");reflection.textContent=item.reflection;reflection.style.whiteSpace="pre-wrap";
+   info.append(title,poem,reflection);const actions=document.createElement("div");actions.className="admin-actions";
+   if(item.status!=="approved"){
+    const approve=document.createElement("button");approve.className="small-btn";approve.textContent="Approve";
+    approve.addEventListener("click",()=>moderateResponse(item.id,"approved"));
+    actions.append(approve);
+   }
+   if(item.status!=="rejected"){
+    const reject=document.createElement("button");reject.className="small-btn";reject.textContent="Reject";
+    reject.addEventListener("click",()=>moderateResponse(item.id,"rejected"));actions.append(reject);
+   }
+   const remove=document.createElement("button");remove.className="small-btn danger";remove.textContent="Delete";
+   remove.addEventListener("click",async()=>{if(!confirm("Delete this reader reflection permanently?"))return;try{await api("/api/engagement",{method:"DELETE",body:JSON.stringify({id:item.id})});loadEngagement()}catch(e){alert(e.message)}});
+   actions.append(remove);row.append(info,actions);holder.append(row);
+  });
+ }catch(error){summary.textContent=error.message;holder.textContent="Could not load reader reflections."}
+}
+async function moderateResponse(id,status){
+ try{await api("/api/engagement",{method:"PATCH",body:JSON.stringify({id,status})});loadEngagement()}
+ catch(error){alert(error.message)}
 }
