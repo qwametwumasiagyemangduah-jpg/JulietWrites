@@ -84,7 +84,7 @@ module.exports = async function handler(req, res) {
       const recent = await db`SELECT COUNT(*)::int AS count FROM reader_responses WHERE visitor_hash=${visitor} AND created_at > NOW() - INTERVAL '1 hour'`;
       if (recent[0].count >= 3) return res.status(429).json({error:"Please wait before submitting another reflection."});
       await db`INSERT INTO reader_responses (poem_id, display_name, reflection, visitor_hash) VALUES (${poemId}, ${displayName}, ${reflection}, ${visitor})`;
-      return res.status(201).json({ok:true,message:"Thank you. Your reflection has been sent for review before it appears publicly."});
+      return res.status(201).json({ok:true,message:"Thank you for sharing your reflection."});
     }
     if (req.method === "PATCH") {
       if (!sameOrigin(req)) return res.status(403).json({error:"Request origin could not be verified."});
