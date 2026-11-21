@@ -1,1 +1,2 @@
 document.getElementById('year')&&(document.getElementById('year').textContent=new Date().getFullYear());const menu=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');if(menu&&nav){menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',open?'true':'false');menu.setAttribute('aria-label',open?'Close navigation':'Open navigation')})}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));}
