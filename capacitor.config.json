@@ -1,0 +1,17 @@
+{
+  "appId": "com.julietwrites.app",
+  "appName": "JulietWrites",
+  "webDir": "www",
+  "server": {
+    "url": "https://julietwrites.vercel.app/app.html",
+    "cleartext": false,
+    "allowNavigation": [
+      "julietwrites.vercel.app"
+    ]
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}
