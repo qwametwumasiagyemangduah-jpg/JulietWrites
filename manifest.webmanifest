@@ -2,7 +2,7 @@
   "name": "JulietWrites",
   "short_name": "JulietWrites",
   "description": "Poetry, reflections and words for every feeling.",
-  "start_url": "/",
+  "start_url": "/app.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
