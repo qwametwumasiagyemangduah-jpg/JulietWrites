@@ -1,8 +1,22 @@
 {
-  "name": "julietwrites",
+  "name": "julietwrites-mobile",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "mobile:android": "npx cap add android",
+    "mobile:ios": "npx cap add ios",
+    "mobile:sync": "npx cap sync",
+    "mobile:open:android": "npx cap open android",
+    "mobile:open:ios": "npx cap open ios"
+  },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2"
+    "@neondatabase/serverless": "^1.0.2",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/ios": "^7.4.3",
+    "@capacitor/splash-screen": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3"
   }
 }
