@@ -1,0 +1,14 @@
+{
+  "name": "JulietWrites",
+  "short_name": "JulietWrites",
+  "description": "Poetry, reflections and words for every feeling.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#11100f",
+  "theme_color": "#11100f",
+  "icons": [
+    { "src": "/file_00000000071882438b394cce63331488.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
