@@ -28,26 +28,29 @@ function documentHtml({ title, description, canonical, body, poem }) {
   const json = poem ? JSON.stringify(poem).replace(/</g, "\\u003c") : "";
   const structured = poem ? {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "@id": canonical + "#work",
-    "name": poem.title,
-    "description": descriptionFor(poem),
-    "genre": "Poetry",
-    "author": { "@type": "Person", "@id": SITE + "/#author", "name": "Juliet Asamoah", "url": SITE + "/about" },
-    "publisher": { "@type": "Organization", "name": "JulietWrites", "url": SITE },
-    "url": canonical,
-    "datePublished": poem.createdAt,
-    "dateModified": poem.updatedAt || poem.createdAt,
-    "inLanguage": "en",
-    "copyrightHolder": { "@type": "Person", "name": "Juliet Asamoah" }
-  } : {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Poetry — JulietWrites",
-    "url": canonical,
-    "isPartOf": { "@type": "WebSite", "name": "JulietWrites", "url": SITE }
-  };
-  const structuredJson = JSON.stringify(structured).replace(/</g, "\\u003c");
+    "@graph": [{
+      "@type": "CreativeWork",
+      "@id": canonical + "#work",
+      "name": poem.title,
+      "description": descriptionFor(poem),
+      "genre": "Poetry",
+      "author": { "@type": "Person", "@id": SITE + "/#author", "name": "Juliet Asamoah", "url": SITE + "/about" },
+      "publisher": { "@type": "Organization", "name": "JulietWrites", "url": SITE },
+      "url": canonical,
+      "datePublished": poem.createdAt,
+      "dateModified": poem.updatedAt || poem.createdAt,
+      "inLanguage": "en",
+      "copyrightHolder": { "@type": "Person", "name": "Juliet Asamoah" }
+    }, {
+      "@type": "BreadcrumbList",
+      "@id": canonical + "#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/" },
+        { "@type": "ListItem", "position": 2, "name": "Poetry", "item": SITE + "/poems" },
+        { "@type": "ListItem", "position": 3, "name": poem.title, "item": canonical }
+      ]
+    }]
+  } : {.replace(/</g, "\\u003c");
   return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11100f"><title>' + escapeHtml(title) + '</title><meta name="description" content="' + escapeHtml(description) + '"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="' + escapeHtml(canonical) + '"><meta property="og:type" content="' + (poem ? "article" : "website") + '"><meta property="og:site_name" content="JulietWrites"><meta property="og:title" content="' + escapeHtml(title) + '"><meta property="og:description" content="' + escapeHtml(description) + '"><meta property="og:url" content="' + escapeHtml(canonical) + '"><script type="application/ld+json">' + structuredJson + '</script><meta property="og:image" content="' + LOGO + '"><meta property="og:image:secure_url" content="' + LOGO + '"><meta property="og:image:type" content="image/png"><meta property="og:image:alt" content="JulietWrites logo"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="' + escapeHtml(title) + '"><meta name="twitter:description" content="' + escapeHtml(description) + '"><meta name="twitter:image" content="' + LOGO + '"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&family=Allura&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"></head><body>' + header("poems") + '<main>' + body + '</main>' + footer() + '<script src="/script.js" defer></script>' + (poem ? '<script id="poem-data" type="application/json">' + json + '</script><script src="/poems.js" defer></script><script src="/engagement.js" defer></script>' : '') + '</body></html>';
 }
 async function readPoems() {
