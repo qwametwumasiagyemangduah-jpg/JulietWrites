@@ -29,8 +29,11 @@ function documentHtml({ title, description, canonical, body, poem }) {
   const structured = poem ? {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
+    "@id": canonical + "#work",
     "name": poem.title,
-    "author": { "@type": "Person", "name": "Juliet Asamoah" },
+    "description": descriptionFor(poem),
+    "genre": "Poetry",
+    "author": { "@type": "Person", "@id": SITE + "/#author", "name": "Juliet Asamoah", "url": SITE + "/about" },
     "publisher": { "@type": "Organization", "name": "JulietWrites", "url": SITE },
     "url": canonical,
     "datePublished": poem.createdAt,
