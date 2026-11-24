@@ -19,8 +19,10 @@ module.exports = async function handler(req, res) {
     for (const poem of Array.isArray(poems) ? poems : []) {
       const slug = poem.slug || poem.id;
       if (!slug) continue;
-      const lastmod = poem.updatedAt || poem.createdAt;
-      entries.push('<url><loc>' + SITE + '/poem/' + encodeURIComponent(slug) + '</loc>' + (lastmod ? '<lastmod>' + xml(new Date(lastmod).toISOString().slice(0, 10)) + '</lastmod>' : '') + '<changefreq>monthly</changefreq><priority>0.7</priority></url>');
+      const lastmodValue = poem.updatedAt || poem.createdAt;
+      const parsedLastmod = lastmodValue ? new Date(lastmodValue) : null;
+      const lastmod = parsedLastmod && !Number.isNaN(parsedLastmod.getTime()) ? parsedLastmod.toISOString().slice(0, 10) : "";
+      entries.push('<url><loc>' + SITE + '/poem/' + encodeURIComponent(slug) + '</loc>' + (lastmod ? '<lastmod>' + xml(lastmod) + '</lastmod>' : '') + '<changefreq>monthly</changefreq><priority>0.7</priority></url>');
     }
     res.setHeader("Content-Type", "application/xml; charset=utf-8");
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=3600");
