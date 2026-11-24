@@ -34,7 +34,7 @@ function documentHtml({ title, description, canonical, body, poem }) {
       "name": poem.title,
       "description": descriptionFor(poem),
       "genre": "Poetry",
-      "author": { "@type": "Person", "@id": SITE + "/#author", "name": "Juliet Asamoah", "url": SITE + "/about" },
+      "author": { "@type": "Person", "@id": SITE + "/#author", "name": "Juliet Asamoah", "url": SITE + "/about", "sameAs": ["https://www.instagram.com/juliet.writes0/", "https://www.tiktok.com/@juliet.writes0"] },
       "publisher": { "@type": "Organization", "name": "JulietWrites", "url": SITE },
       "url": canonical,
       "datePublished": poem.createdAt,
